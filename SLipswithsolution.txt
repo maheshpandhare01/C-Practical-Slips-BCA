@@ -1,0 +1,1067 @@
+Slip No=1
+
+a)Write a c++ program to check maximum and minimum of two integer numbers.(Use inline function and Conditional Operator)
+
+For Run program in Turbo C++:
+--------------------------------------------------------------------------------------------
+
+#include<iostream.h>
+#include<conio.h>
+class check{
+public:
+inline int maximum(int a, int b){
+return ((a<b)?a:b);
+}
+inline int minimum(int a, int b){
+return ((a>b)?a:b);
+}};
+void main(){
+    check c;
+    int a,b;
+    cout<<"\nEnter 1st Number:";
+    cin>>a;
+    cout<<"\nEnter 2nd Number:";
+    cin>>b;
+    cout<<"\nMaximum Number is"<<c.minimum(a,b);
+    cout<<"\nminimum Number is"<<c.maximum(a,b);
+    getch();
+}
+--------------------------------------------------------------------------------------------
+For Run program in Visual Studio Code or DevC++;
+--------------------------------------------------------------------------------------------
+#include<iostream>
+using namespace std;
+class check{
+public:
+inline int maximum(int a, int b){
+return ((a<b)?a:b);
+        // cout<<"\nMaximum Number is ";
+}
+inline int minimum(int a, int b){
+return ((a>b)?a:b);
+}};
+int main(){
+    check c;
+    int a,b;
+    cout<<"\nEnter 1st Number:";
+    cin>>a;
+    cout<<"\nEnter 2nd Number:";
+    cin>>b;
+    cout<<"\nMaximum Number is"<<c.minimum(a,b);
+    cout<<"\nminimum Number is"<<c.maximum(a,b);
+}
+
+
+ b) Create a C++ class MyFile with data members file pointer and filename. Write necssary member functions to accept and display file. Overload the following operators:
+
+Operator           Example                    Purpose
+
++                         F3=F1+F2              Concatenate the contents of file F! and F2 in F3
+
+!                           !F3                          Changes the case of alternate characters of file F3.
+
+
+#include <conio.h>
+#include <stdio.h>
+#include <iostream.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+#define MAXSIZE (10)
+class myfile
+{
+    FILE *fp;
+    char fn[MAXSIZE];
+public:
+    myfile(char *fname)
+    {
+        strcpy(fn, fname);
+    }
+    myfile operator+(myfile);
+    void operator!();
+    void display();
+};
+void myfile::display()
+{
+    fp = fopen(fn, "r");
+    char ch;
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        cout << ch;
+    }
+    fclose(fp);
+}
+void myfile::operator!()
+{
+    myfile f4("sy.txt");
+    char ch;
+    fp = fopen(fn, "r");
+    f4.fp = fopen(f4.fn, "w");
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        if (isupper(ch))
+            fputc(tolower(ch), f4.fp);
+        else if (islower(ch))
+            fputc(toupper(ch), f4.fp);
+        else
+            fputc(ch, f4.fp);
+    }
+    fclose(fp);
+    fclose(f4.fp);
+    remove("abc.txt");
+    rename("sy.txt", "abc.txt");
+}
+myfile myfile::operator+(myfile f2)
+{
+    myfile f3("abc.txt");
+    fp = fopen(fn, "r");
+    f2.fp = fopen(f2.fn, "r");
+    f3.fp = fopen(f3.fn, "w");
+    char ch;
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        fputc(ch, f3.fp);
+    }
+    fclose(fp);
+    while ((ch = fgetc(f2.fp)) != EOF)
+    {
+        fputc(ch, f3.fp);
+    }
+    fcloseall();
+    return f3;
+}
+void main()
+{
+    myfile f1("xyz.txt");
+    myfile f2("lmn.txt");
+    myfile f3("abc.txt");
+    clrscr();
+    cout << "first file \n";
+    f1.display();
+    cout << "second file \n";
+    f2.display();
+    f3 = f1 + f2;
+    cout << "\nAfter Concatenation of Two File:";
+    f3.display();
+    cout << "\nAfter Changes Case\n";
+    !f3;
+    f3.display();
+    getch();
+}
+ Slip No-2
+
+a)Write a C++ program to find volume of cylinder, cone and sphere. (Use function overloading).
+
+
+#include<iostream.h>
+#include<conio.h>
+int pi=3.14;
+int volume(int r, int h){
+return(pi*r*r*h);
+}
+float volume(int r, float h){
+return(0.33*h*pi*r*r);
+}
+int volume(int r){
+return(4/3*pi*r*r);
+}
+void main(){
+int rc=5,rs=8,rcone=15,h=8;
+float hcone=5;
+cout<<"\nVolume of Cylinder:"<<volume(rc,h);    
+cout<<"\nVolume of Sphere:"<<volume(rs);    
+cout<<"\nVolume of Cone:"<<volume(rcone,hcone);    
+getch();
+}
+
+b)Write a C++ program to create a class Movie with data members M_Name, Release_Year, Director_Name and Budget. (Use File Handling) Write necessary member functions to:
+
+1.Accept details for 'n' Movies from user and store it in a file "M ovie. bet" .
+
+11.Display Movie details from a file.
+
+111.Count  the  number of objects stored in a file.  
+
+
+#include<iostream.h>
+#include<conio.h>
+#include<fstream.h>
+class Movie
+{
+public:
+int year;
+char mname[20];
+char dname[15];
+int budget;
+public:
+ void accept()
+{
+cout<<"\nEnter the movie name:-";
+cin>>mname;
+cout<<"Enter the Release year:-";
+cin>>year;
+cout<<"\nEnter the Director_Name:-";
+cin>>dname;
+cout<<"\nEnter the Budget-";
+cin>>budget;
+}
+ void display()
+{
+cout<<"\nThe  movie name- "<<mname;
+cout<<"\n The Release year- "<<year;
+cout<<"\nThe Director_Name- "<<dname;
+cout<<"\nThe Budget- "<<budget;
+}
+};
+void main()
+{
+Movie m[5];
+int n,i;
+clrscr();
+fstream file;
+file.open("Movie.bet", ios::in|ios::out);
+cout<<"\nEnter the no. of records you want to enter-";
+cin>>n;
+for(i=0; i<n; i++)
+{
+m[i].accept();
+file.write((char*) & m[i], sizeof(m[i]));
+}
+cout<<"\nDetails of Movie from the file-: ";
+for(i=0; i<n; i++)
+{
+file.read((char*) &m[i],sizeof(m[i]));
+m[i].display();
+}
+file.close();
+getch();
+}
+
+Slip No-3 
+
+a)Write a C++ program to interchange value s of two integer numbers. (Use call by reference).
+
+#include<iostream.h>
+#include<conio.h>
+int swap(int &a, int &b){
+a=b+a;
+b=a-b;
+a=a-b;
+    }
+void main(){
+    int m,n;
+    cout<<"\nEnter Value of m and n:";
+    cin>>m>>n;
+    cout<<"\nValue of m="<<m<<"\nValue of n="<<n;
+    swap(m,n);
+    cout<<"\nValue of m="<<m<<"\nValue of n="<<n;
+    getch();
+}
+
+b)Write a C++ program to accept ' n' numbers from user through Command Line Argument.Store all Even and Odd numbers in file "Even.txt" and "Odd.txt" respectively.
+
+
+#include<iostream.h>
+#include<conio.h>
+#include<fstream.h>
+void main()
+{
+ofstream out;
+int a[10]={1,2,3,4,5,6,7,8,9}, b[10];
+out.open("input.txt");
+out.write((char*) &a, size of (a));
+out.close();
+ifstream in;
+ofstream fp1, fp2;
+in.open("input.txt");
+in.read((char*) &b, size of (b));
+fp1.open ("even.txt");
+fp2.open("odd.txt");
+for (int i=0; i<10; i++)
+ {
+if (b[i]%2==0)
+fp1<<b[i]<<"";
+else
+fp2<<b[i]<<"";
+ }
+in.close();
+fp1.close();
+fp2.close();
+if stream fp;
+char ch;
+fp.open ("even.txt");
+cout<<"the even file contents are:";
+while (fp)
+{
+fp.get(ch);
+cout<<ch;
+ }
+fp.close();
+fp.open("odd.txt");
+cout<<"the odd file contents are:";
+while (fp)
+ {
+fp.get(ch);
+cout<<ch;
+ }
+fp.close();
+getch();
+}
+
+Slip No-4 
+
+a)Write a C++ program to accept Worker informati on Worker_Na me, No_of_Hours_worked, Pay_ Rate and Salary. Write necessary functions to calculate and display the salary of Worker. (Use default value for Pay_Rate)
+
+#include<stdio.h>
+#include<iostream.h>
+#include<conio.h>
+class worker
+{
+public:
+char name[10];
+int hr;
+void getdata()
+{            
+cout<<"enter name";
+cin>>name;
+cout<<"enter hours";
+cin>>hr;
+}
+void calculate(int rate=20)
+{
+cout<<"salary of worker is Rs."<<(hr*10)*rate;
+}
+};
+void main()
+{
+worker w;
+clrscr();
+w.accept();
+w.calculate();
+getch();
+}   
+
+ b)Write a C++ program to create a base class Employee (Emp-code, name, salary). Derive two classes as Fulltime (daily_wages, number_of_days) and Parttime (number_of_working_hours, hourly_wages). Write a menu driven program to perform following functions:
+
+1.Accept the details of ' n ' employees and calculate the salary.
+
+2.Display the details of ' n' employees.
+
+3.Display the details of employee having maximum salary for both types of employees.
+
+
+#include<iostream.h>
+#include<conio.h>
+#include<stdlib.h>
+const int m=50;
+class emp
+{
+public:
+int empcode;
+char empname[30];
+public:
+void get()
+{
+cout<<"\nEnter Employee Code:";
+cin>>empcode;
+cout<<"\n Enter Employee Name:";
+cin>>empname;                     
+}
+};
+class fulltime:public emp
+{
+public:
+ int no_of_days, daily_wages,salary1;
+ public:
+void getdata()
+{
+cout<<"\n Enter no_of_days:";
+cin>> no_of_days;
+cout<<"\n Enter daily_wages:";
+cin>>daily_wages;
+}
+void cal()
+{
+salary1= no_of_days * daily_wages;
+cout<<" \n Full-Time Salary:  "<<salary1;
+}
+void show()
+{
+cout<<"\n ----------------------------------\n";
+cout<<"\n Employee Number:"<<empcode;
+cout<<"\n Employee Name  :"<<empname;
+cout<<"\n Full Time Salary:  "<<salary1;
+cout<<"\n ----------------------------------\n";
+}
+};
+class parttime:public emp
+{
+public:
+int number_of_working_hours, hourly_wages, salary2;
+public:
+void get1()
+{
+cout<<"\n Enter Hourly Rate    :  ";
+cin>> hourly_wages;
+cout<<"\n Enter Working Hours  :  ";
+cin>> number_of_working_hours;
+}
+void cal1()
+{
+salary2= hourly_wages * number_of_working_hours;
+cout<<"\n Part Time Salary               :  "<<salary2<<endl;
+}
+void show1()
+{
+cout<<"\n ----------------------------------\n";
+cout<<"\n Employee Number    :  "<<empcode;
+cout<<"\n Employee Name      :  "<<empname;
+cout<<"\n Part Time Salary   :  "<<salary2;
+cout<<"\n ----------------------------------\n";                }
+};
+ 
+void main()
+{
+clrscr();
+int num,ch,k,l,cnt;
+ fulltime f1[5];
+parttime p1[5];
+cout<<"\n----------MENU ----------";
+cout<<"\n1.Enter Details of Employee of FullTime";
+cout<<"\n2.Enter Details of Employee of PartTime";
+cout<<"\n3.Fulltime Highest Salary";
+cout<<"\n4.PartTime Highest Salary";
+cout<<"\n5.Exit.";
+ do
+{
+cout<<"\nEnter your choice:";
+cin>>ch;
+ switch(ch)
+{
+case 1:
+cout<<"\nHow many records you want to enter for FullTime:";
+cin>>k;
+ 
+for(int i=0;i<k;i++)
+ {
+f1[i].get();
+f1[i].getdata();
+f1[i].cal();
+f1[i].show();
+}
+break;
+case 2:
+cout<<"\nHow many records you want to enter for PartTime:";
+cin>>l;
+ for(i=0;i<l;i++)
+{
+p1[i].get();
+p1[i].get1();
+p1[i].cal1();
+p1[i].show1();
+}
+break;
+ case 3:
+cout<<"\n How Many Employee You Want to Display? : ";
+cin>>cnt;
+for(i=1;i<=cnt;i++)
+{
+f1[i].show();
+}
+int temp=0;
+for(i=1;i<=cnt;i++)
+{
+if(f1[temp].salary1<f1[i].salary1)
+temp=i;
+}
+cout<<"\n Employee with Highest Salary is : "<<f1[temp].salary1;
+cout<<" \n And, Employee Name is : "<<f1[temp].empname;
+break;
+ 
+case 4:
+cout<<"\n How Many Employee You Want to Display? : ";
+cin>>cnt;
+for(i=1;i<=cnt;i++)
+{
+p1[i].show1();
+}
+int t=0;
+for(i=1;i<=cnt;i++)
+{
+if(p1[t].salary2<p1[i].salary2)
+t=i;
+}
+cout<<"\n Employee with Highest Salary is : "<<p1[temp].salary2;
+cout<<" \n And, Employee Name is : "<<p1[temp].empname;
+break;
+ case 5:
+exit(0);
+default:
+cout<<"\nYou entered wrong choice:";
+}
+}while(ch!=5);
+getch();
+}
+
+Slip No-5 a) Consider the following C++ class 
+
+class Point { 
+
+intx,y; 
+
+public: 
+
+void setpoint(int, int); 
+
+void showpoint(); 
+
+}; 
+
+// To set the values ofx and y co-ordinate . 
+
+// To display co-ordinate of a point P in format (x, y).
+
+
+#include<iostream.h>
+#include<conio.h>
+class point
+{
+int X, Y;
+ public:
+//defualt constructor
+point()
+{
+X=0;
+Y=0;
+}
+void setPoint(int a, int b)
+{
+X = a;
+Y = b;
+}
+int getX(void)
+{
+  return X;
+}
+int getY(void)
+{
+  return Y;
+}
+void showPoint()
+{
+cout<<"a"<<X;
+cout<<"b"<<Y;
+}
+};
+ void main()
+{
+point p1;
+ p1.setPoint(5,10);
+p1.showPoint();
+cout<<endl<<"p1: "<<p1.getX()<<" , "<<p1.getY()<<endl;
+}
+
+b) b)Create a C++ base class Shape. Derive three different classes Circle, Sphere and Cylinder from shape class. Write a C++ program to calculate area of Circle, Sphere and Cylinder. (Use pure virtual function).         
+
+
+#include<iostream.h>
+#include<conio.h>
+#include<stdlib.h>
+class shape
+{
+public:
+virtual void area()=0;
+};
+class circle:public shape
+{
+public:
+int r;
+void getc()
+{
+cout<<"\nenter the radius:";
+cin>>r;
+}
+void area();
+};
+class Sphere:public shape
+{
+public:
+int r1;
+void getr()
+{
+cout<<"\nEnter the radius:";
+cin>>r1;
+}
+void area();
+};
+ class Cylinder:public shape
+{
+public:
+int r2,h;
+void gett()
+{
+cout<<"\n Enter the radius:";
+cin>>r2;
+cout<<"Enter the Height:";
+cin>>h;
+}
+void area();
+};
+ 
+void circle::area()
+{
+cout<<(3.14*r*r);
+}
+void Sphere::area()
+{
+cout<<(4*3.14*r1*r1);
+}
+void Cylinder::area()
+{
+
+cout<<(2*3.14*r2*h+2*3.14*r2*r2);
+}
+void main()
+{
+int ch;
+circle c;
+Sphere S;
+Cylinder t;
+cout<<"\nArea of circle";
+c.getc();
+cout<<"Area of circle:";
+c.area();
+cout<<"\nArea of Sphere";
+S.getr();
+cout<<"Area of Sphere:";
+S.area();
+cout<<"\nArea of cylinder";
+t.gett();
+cout<<"Area of cylinder:";
+t.area();
+getch();
+}
+
+ Slip No-6
+
+a)Write a C++ program to create two Classes Square and Rectangle. Compare area of both the shapes using friend function.Accept appropriate data members for both the classes .   
+
+
+#include<iostream.h>
+#include<conio.h>
+class Square
+{
+friend class Rectangle;      // declaring Rectangle as friend class
+int side;
+public:
+Square ( int s )
+{
+side = s;
+}
+};
+ 
+class Rectangle
+{
+int length;
+int breadth;
+public:
+int getArea()
+{
+return length * breadth;
+}
+void shape( Square a )
+{
+length = a.side;
+breadth = a.side;
+}
+};
+ 
+void main()
+{
+Square square(5);
+Rectangle rectangle;
+rectangle.shape(square);
+cout << rectangle.getArea();
+getch();
+}
+
+ b)Create a C++ class 
+
+class Matrix
+
+{
+
+public:
+
+};
+
+ int **p; int r, c;
+
+//member functions
+
+ Write necessary member functions to:
+
+1.Accept M atrix elements
+
+11.Display Matrix elements.
+
+ll I.Ca lculate transpose of a Matrix .
+
+(Use constructor and destructor).
+
+
+#include<iostream.h>
+#include<conio.h>
+class MATRIX
+{
+int a[5][5];
+int row,col;
+public:
+MATRIX(int x,int y)//constructor
+{
+row=x;
+col=y;
+}
+~MATRIX()
+{   
+cout<<"Destructor Invoked"<<endl;   
+}
+void getdata()
+{
+cout<<"Enter elements of matrix:\n";
+for(int i=0;i<row;i++)
+{
+for(int j=0;j<col;j++) cin>>a[i][j];
+}
+}
+void display()
+{
+for(int i=0;i<row;i++)
+{
+for(int j=0;j<col;j++)
+cout<<a[i][j]<<"";
+cout<<"\n";
+}
+}
+void transpose()
+{
+for(int i=0;i<row;i++)
+{
+for(int j=0;j<col;j++)
+cout<<a[j][i]<<"";
+cout<<"\n";
+}
+}
+};
+void main()
+{
+int m,n;
+clrscr();
+cout<<"Enter order of matrix:"; cin>>m>>n;
+MATRIX obj1(m,n);
+obj1.getdata();
+cout<<"Matrix is:";
+obj1.display();
+cout<<"Transpose of matrix is:\n";
+obj1.transpose();
+getch();
+}
+
+ Slip No-7
+
+a) Write a C++ program using class with data member char str[50] and function replace (char chI , char ch2) every occurrence of chl in str should be replaced with ch2 and return number of replacement it makes use  default value for char ch2. (Use ch2 as Default Argument)  
+
+
+#include<iostream.h>
+#include<string.h>
+#include<conio.h>
+class replacestring {
+private:
+    char str[50];
+
+public:
+    replacestring(const char* inputedstring) {
+        strcpy(str, inputedstring);
+    }
+
+    int replace(char char1, char char2 = '*') {
+        int count = 0;
+        for (int i = 0; i < strlen(str); i++) {
+            if (str[i] == char1) {
+                str[i] = char2;
+                count++;
+            }
+        }
+        return count;
+    }
+
+    void display() {
+        cout<<"Modified String: "<<str<<endl;
+    }
+};
+
+void main() {
+    replacestring obj("mahesh pandhare");
+    int replacements = obj.replace('h'); // Using default value for char2
+    cout<<"Number of replacements:"<<replacements<<endl;
+    obj.display();
+    getch();
+}
+
+b)Create a C++ class Vector with data memhers size & pointer to integer. The 
+
+size of the vector varies so the memory should be allocated dynamically.
+
+Perform following operations:
+
+1.Accept a vector
+
+11.Display a vector in the format (10, 20, 30,     )
+
+111.Calculate union of two vectors.
+
+(use parameterized constructor & copy constructor)   
+
+
+
+
+#include<iostream.h>
+#include<conio.h>
+class Vector {
+private:
+    int size;
+    int* data;
+
+public:
+    // Here We Use Concept of Parameterized constructor
+    Vector(int n) : size(n) {
+        data = new int[size];
+    }
+
+    // Here We Use Concept of Copy constructor
+    Vector(const Vector& other) : size(other.size) {
+        data = new int[size];
+        for (int i = 0; i < size; i++) {
+            data[i] = other.data[i];
+        }
+    }
+
+    //Here We Use Concept of Destructor
+    ~Vector() {
+        delete[] data;
+    }
+
+    // Accept a vector
+    void acceptVector() {
+         cout<<"Enter "<<size<<" elements: ";
+        for(int i=0; i<size; i++){
+             cin>>data[i];
+        }
+    }
+
+    // Display a vector
+    void displayVector() {
+         cout<<"(";
+        for(int i=0; i<size; i++) {
+             cout<<data[i];
+            if (i<size-1) {
+                 cout<<", ";
+            }
+        }
+         cout<<")"<<endl;
+    }
+
+    // Calculate union of two vectors
+    Vector calculateUnion(const Vector& other) {
+        int newSize = size + other.size;
+        Vector result(newSize);
+        for(int i=0; i<size; i++) {
+            result.data[i] = data[i];
+        }
+        for(int i=0; i<other.size; i++) {
+            result.data[size + i] = other.data[i];
+        }
+        return result;
+    }
+};
+
+void main(){
+    // Create and accept vectors
+    int size1, size2;
+     cout << "Enter size of vector 1: ";
+     cin >> size1;
+    Vector vector1(size1);
+    vector1.acceptVector();
+
+     cout<<"Enter size of vector 2: ";
+     cin>>size2;
+    Vector vector2(size2);
+    vector2.acceptVector();
+
+    // Display vectors
+     cout<<"Vector 1: ";
+    vector1.displayVector();
+
+     cout<<"Vector 2: ";
+    vector2.displayVector();
+
+    // Calculate union of vectors
+    Vector unionVector = vector1.calculateUnion(vector2);
+     cout<<"Union of vectors: ";
+    unionVector.displayVector();
+    getch();
+}
+
+ Slip No-8
+
+a)Write a C++ program to create a class Number, which contain static data member ' cnt' and member function ' Display() '. Display() should print number of times display operation is performed irrespective of the  object responsible for calling Display().
+
+
+#include<iostream.h>
+#include<conio.h>
+class number
+{
+static int count;
+public:
+static void display()
+{
+cout<<count<<"times display operation is performed:"<<endl;
+count++;
+}
+};
+int number::count;
+void main()
+{
+number s1,s2,s3,s4;
+s1.display();
+s2.display();
+s3.display();
+s4.display();
+getch();
+}
+
+ b)Create a C++ class Person with data members Person_name, Mobile_number, Age, City.  Write necessary member functions for the following:
+
+i.Search the mobile number of given person.
+
+ii.Search the person name of given mobile number.
+
+iii.Search all person details of given city.
+
+(Use function overloading)           
+
+#include<iostream>
+#include<conio.h>
+#include<stdlib.h>
+#include<string.h>
+void searchname();
+void searchpno();
+void searchcity();
+char n[10],c[10];
+long pno;
+class Person
+{
+char name[10],city[10];
+long phoneno;
+public:
+void get_data(){
+cout<<"\nEnter the Name:";
+cin>>name;
+cout<<"\n Enter the phone number: ";
+cin>>phoneno;
+cout<<"\n Enter the city: ";
+cin>>city;
+}
+void display_data()
+{
+cout<<"\n Name: "<<name<<"\n Phone no: "<<phoneno<<"\n City: "<<city;
+}
+void searchname()
+{
+if(strcmp(name,n)==0)
+{
+cout<<"\n Name: "<<name<<"\n Phone no: "<<phoneno;
+}
+}
+void searchpno()
+{
+if((phoneno==pno)==1)
+{
+cout<<"\n name: "<<name<<"\n Phone no.: "<<phoneno;
+}
+}
+void searchcity()
+{
+if(strcmp(city,c)==0)
+{
+display_data();
+}
+}
+};
+ 
+void main()
+{
+Person t[30];
+int num,ch;
+char cont;
+cout<<"\n 1.Accept & display customer";
+cout<<"\n 2.Search by name";
+cout<<"\n 3.Search by phoneno";
+cout<<"\n 4.Search by city";
+ 
+do {
+cout<<"\n Enter your choice: ";
+cin>>ch;
+switch(ch)
+{
+case 1: cout<<"\n How many Customer you want to enter: ";
+cin>>num;
+for(int i=0;i<num;i++)
+{
+t[i].get_data();
+}
+for(int i=0;i<num;i++)
+{
+t[i].display_data();
+}
+break;
+ 
+case 2: cout<<"\n Enter name to search phoneno: ";
+cin>>n;
+for(int i=0;i<num;i++)
+{
+t[i].searchname();
+}
+break;
+ 
+case 3: cout<<"\n Enter telephoneno to search name: ";
+cin>>pno;
+for(int i=0;i<num;i++)
+{
+t[i].searchpno();
+}
+break;
+case 4: cout<<"\n Enter city name: ";
+cin>>c;                                   
+for(int i=0;i<num;i++)
+{
+t[i].searchcity();
+}
+break;
+}
+cout<<"\n Do you want to continue: ";
+cin>>cont;
+}
+while(cont=='Y'||cont=='y');
+getch();
+}
+
+
+
+
+
+
+
+
+
+.
